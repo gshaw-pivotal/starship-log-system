@@ -23,4 +23,11 @@ public class LoginController {
 
         return ResponseEntity.status(200).body(response);
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity logout(@RequestBody LoginRequest request) {
+        loginSecurityService.logout(request);
+
+        return ResponseEntity.status(200).build();
+    }
 }

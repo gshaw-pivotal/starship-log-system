@@ -38,6 +38,10 @@ public class LoginSecurityService {
         throw new InvalidLoginAttemptException();
     }
 
+    public void logout(LoginRequest loginRequest) {
+        tokenRepository.removeToken(loginRequest.getUsername());
+    }
+
     public void loadUsers(List<LoginRequest> loginRequests) {
         for (LoginRequest loginRequest : loginRequests) {
             userRepository.save(loginRequest);
