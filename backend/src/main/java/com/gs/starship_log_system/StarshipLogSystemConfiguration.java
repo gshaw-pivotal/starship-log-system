@@ -4,6 +4,7 @@ import com.gs.starship_log_system.repository.H2UserRepository;
 import com.gs.starship_log_system.repository.InMemoryTokenRepository;
 import com.gs.starship_log_system.repository.TokenRepository;
 import com.gs.starship_log_system.repository.UserRepository;
+import com.gs.starship_log_system.service.LogEntryService;
 import com.gs.starship_log_system.service.LoginSecurityService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +25,11 @@ public class StarshipLogSystemConfiguration {
     @Bean
     public LoginSecurityService loginSecurityService(TokenRepository tokenRepository, UserRepository userRepository) {
         return new LoginSecurityService(tokenRepository, userRepository);
+    }
+
+    @Bean
+    public LogEntryService logEntryService() {
+        return new LogEntryService();
     }
 
     @Bean
