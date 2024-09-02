@@ -3,6 +3,7 @@ package com.gs.starship_log_system.service;
 import com.gs.starship_log_system.exception.InvalidLoginAttemptException;
 import com.gs.starship_log_system.model.LoginRequest;
 import com.gs.starship_log_system.model.LoginResponse;
+import com.gs.starship_log_system.model.User;
 import com.gs.starship_log_system.repository.TokenRepository;
 import com.gs.starship_log_system.repository.UserRepository;
 
@@ -40,6 +41,16 @@ public class LoginSecurityService {
 
     public void logout(LoginRequest loginRequest) {
         tokenRepository.removeToken(loginRequest.getUsername());
+    }
+
+    public User getUser(String token) {
+        String username = tokenRepository.getUsername(token);
+
+        if (username == null) {
+            return null;
+        }
+
+        return userRepository.getUser(username);
     }
 
     public void loadUsers(List<LoginRequest> loginRequests) {

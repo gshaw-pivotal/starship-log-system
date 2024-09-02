@@ -22,4 +22,9 @@ public class InMemoryTokenRepository implements TokenRepository {
         userMap.remove(username);
         tokenMap.remove(associatedToken);
     }
+
+    @Override
+    public String getUsername(String token) {
+        return tokenMap.get(token);
+    }
 }

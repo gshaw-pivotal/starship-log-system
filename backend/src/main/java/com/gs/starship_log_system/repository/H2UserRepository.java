@@ -1,6 +1,7 @@
 package com.gs.starship_log_system.repository;
 
 import com.gs.starship_log_system.model.LoginRequest;
+import com.gs.starship_log_system.model.User;
 
 import java.sql.*;
 
@@ -17,6 +18,8 @@ public class H2UserRepository implements UserRepository {
     private final String queryLogin = "select * from users where username = '%s' and password = '%s' and rank = '%s' and name = '%s'";
 
     private final String saveUser = "insert into users (id, username, password, rank, name) values (%s, '%s', '%s', '%s', '%s')";
+
+    private final String getUserByUsername = "select * from users where username = '%s'";
 
     public H2UserRepository(String dbUrl, String dbUser, String dbPass) {
         this.dbUrl = dbUrl;
@@ -75,6 +78,40 @@ public class H2UserRepository implements UserRepository {
         } catch (SQLException e) {
 
         }
+    }
+
+    @Override
+    public User getUser(String username) {
+        try {
+            Connection conn = getConnection();
+            User user = null;
+
+            if (conn != null) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(
+                        String.format(
+                                getUserByUsername,
+                                username
+                        )
+                );
+
+                if (rs.next()) {
+                    user = User.builder()
+                            .id(rs.getInt(rs.findColumn("id")))
+                            .name(rs.getString(rs.findColumn("name")))
+                            .rank(rs.getString(rs.findColumn("rank")))
+                            .username(username)
+                            .build();
+                }
+
+                conn.close();
+                return user;
+            }
+        } catch (SQLException e) {
+            return null;
+        }
+
+        return null;
     }
 
     private Connection getConnection() {
