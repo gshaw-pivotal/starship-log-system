@@ -1,5 +1,6 @@
 package com.gs.starship_log_system.service;
 
+import com.gs.starship_log_system.exception.InvalidLogEntryException;
 import com.gs.starship_log_system.model.Log;
 import com.gs.starship_log_system.model.User;
 
@@ -13,6 +14,21 @@ public class LogEntryService {
     }
 
     public boolean storeNewLog(User user, Log log) {
+        validateNewLog(log);
         return false;
+    }
+
+    private void validateNewLog(Log log) {
+        if (log == null) {
+            throw new InvalidLogEntryException();
+        }
+
+        if (log.getLogDate() == null || log.getHeader() == null || log.getContent() == null) {
+            throw new InvalidLogEntryException();
+        }
+
+        if (log.getLogDate().isBlank() || log.getHeader().isBlank() || log.getContent().isBlank()) {
+            throw new InvalidLogEntryException();
+        }
     }
 }
