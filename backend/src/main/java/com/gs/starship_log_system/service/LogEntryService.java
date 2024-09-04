@@ -13,6 +13,10 @@ public class LogEntryService {
         return Collections.emptyList();
     }
 
+    public Log getLog(User user, String logId) {
+        return null;
+    }
+
     public boolean storeNewLog(User user, Log log) {
         validateNewLog(log);
         return false;

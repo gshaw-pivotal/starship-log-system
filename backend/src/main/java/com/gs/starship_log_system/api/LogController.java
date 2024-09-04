@@ -35,6 +35,19 @@ public class LogController {
         return ResponseEntity.status(200).body(logs);
     }
 
+    @GetMapping("/log/{logId}")
+    public ResponseEntity<Log> getLog(@RequestHeader("X-API-KEY") String token, @PathVariable("logId") String logId) {
+        User user = validateToken(token);
+
+        Log log = logEntryService.getLog(user, logId);
+
+        if (log != null) {
+            return ResponseEntity.ok(log);
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
     @PostMapping("/log")
     public ResponseEntity addLog(@RequestHeader("X-API-KEY") String token, @RequestBody Log newLog) {
         User user = validateToken(token);
