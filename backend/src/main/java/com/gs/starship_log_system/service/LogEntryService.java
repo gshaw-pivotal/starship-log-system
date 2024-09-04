@@ -23,11 +23,19 @@ public class LogEntryService {
             throw new InvalidLogEntryException();
         }
 
-        if (log.getLogDate() == null || log.getHeader() == null || log.getContent() == null) {
+        if (
+                log.getLogDate() == null || log.getPosting() == null ||
+                log.getLocation() == null ||log.getHeader() == null ||
+                log.getContent() == null
+        ) {
             throw new InvalidLogEntryException();
         }
 
-        if (log.getLogDate().isBlank() || log.getHeader().isBlank() || log.getContent().isBlank()) {
+        if (
+                log.getLogDate().isBlank() || log.getPosting().isBlank() ||
+                log.getLocation().isBlank() || log.getHeader().isBlank() ||
+                log.getContent().isBlank()
+        ) {
             throw new InvalidLogEntryException();
         }
     }

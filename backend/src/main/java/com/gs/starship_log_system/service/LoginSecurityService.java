@@ -1,6 +1,7 @@
 package com.gs.starship_log_system.service;
 
 import com.gs.starship_log_system.exception.InvalidLoginAttemptException;
+import com.gs.starship_log_system.model.ImportUser;
 import com.gs.starship_log_system.model.LoginRequest;
 import com.gs.starship_log_system.model.LoginResponse;
 import com.gs.starship_log_system.model.User;
@@ -53,9 +54,9 @@ public class LoginSecurityService {
         return userRepository.getUser(username);
     }
 
-    public void loadUsers(List<LoginRequest> loginRequests) {
-        for (LoginRequest loginRequest : loginRequests) {
-            userRepository.save(loginRequest);
+    public void loadUsers(List<ImportUser> users) {
+        for (ImportUser user : users) {
+            userRepository.save(user);
         }
     }
 

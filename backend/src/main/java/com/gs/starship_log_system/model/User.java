@@ -3,11 +3,13 @@ package com.gs.starship_log_system.model;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Builder
 @Data
 public class User {
 
-    private int id;
+    private UUID id;
 
     private String name;
 

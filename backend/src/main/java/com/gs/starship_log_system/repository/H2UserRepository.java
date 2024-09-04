@@ -1,9 +1,11 @@
 package com.gs.starship_log_system.repository;
 
+import com.gs.starship_log_system.model.ImportUser;
 import com.gs.starship_log_system.model.LoginRequest;
 import com.gs.starship_log_system.model.User;
 
 import java.sql.*;
+import java.util.UUID;
 
 public class H2UserRepository implements UserRepository {
 
@@ -13,11 +15,9 @@ public class H2UserRepository implements UserRepository {
 
     private final String dbPass;
 
-    private int nextId = 1;
-
     private final String queryLogin = "select * from users where username = '%s' and password = '%s' and rank = '%s' and name = '%s'";
 
-    private final String saveUser = "insert into users (id, username, password, rank, name) values (%s, '%s', '%s', '%s', '%s')";
+    private final String saveUser = "insert into users (id, username, password, rank, name) values ('%s', '%s', '%s', '%s', '%s')";
 
     private final String getUserByUsername = "select * from users where username = '%s'";
 
@@ -56,7 +56,7 @@ public class H2UserRepository implements UserRepository {
     }
 
     @Override
-    public void save(LoginRequest loginRequest) {
+    public void save(ImportUser user) {
         try {
             Connection conn = getConnection();
 
@@ -65,18 +65,17 @@ public class H2UserRepository implements UserRepository {
                 stmt.executeUpdate(
                         String.format(
                                 saveUser,
-                                nextId,
-                                loginRequest.getUsername(),
-                                loginRequest.getPassword(),
-                                loginRequest.getRank(),
-                                loginRequest.getName()
+                                user.getId().toString(),
+                                user.getUsername(),
+                                user.getPassword(),
+                                user.getRank(),
+                                user.getName()
                         )
                 );
                 conn.close();
-                nextId++;
             }
         } catch (SQLException e) {
-
+            System.out.println("SQLException in H2UserRepository.save: " + e.getMessage());
         }
     }
 
@@ -97,7 +96,7 @@ public class H2UserRepository implements UserRepository {
 
                 if (rs.next()) {
                     user = User.builder()
-                            .id(rs.getInt(rs.findColumn("id")))
+                            .id(UUID.fromString(rs.getString(rs.findColumn("id"))))
                             .name(rs.getString(rs.findColumn("name")))
                             .rank(rs.getString(rs.findColumn("rank")))
                             .username(username)
