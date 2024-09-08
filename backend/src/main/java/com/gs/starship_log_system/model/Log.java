@@ -2,6 +2,7 @@ package com.gs.starship_log_system.model;
 
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 
 import java.util.UUID;
 
@@ -9,6 +10,7 @@ import java.util.UUID;
 @Data
 public class Log {
 
+    @Id
     private UUID id;
 
     private UUID userId;

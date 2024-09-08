@@ -1,9 +1,6 @@
 package com.gs.starship_log_system;
 
-import com.gs.starship_log_system.repository.H2UserRepository;
-import com.gs.starship_log_system.repository.InMemoryTokenRepository;
-import com.gs.starship_log_system.repository.TokenRepository;
-import com.gs.starship_log_system.repository.UserRepository;
+import com.gs.starship_log_system.repository.*;
 import com.gs.starship_log_system.service.LogEntryService;
 import com.gs.starship_log_system.service.LoginSecurityService;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,8 +25,8 @@ public class StarshipLogSystemConfiguration {
     }
 
     @Bean
-    public LogEntryService logEntryService() {
-        return new LogEntryService();
+    public LogEntryService logEntryService(StarshipLogRepository starshipLogRepository) {
+        return new LogEntryService(starshipLogRepository);
     }
 
     @Bean

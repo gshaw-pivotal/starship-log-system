@@ -3,23 +3,36 @@ package com.gs.starship_log_system.service;
 import com.gs.starship_log_system.exception.InvalidLogEntryException;
 import com.gs.starship_log_system.model.Log;
 import com.gs.starship_log_system.model.User;
+import com.gs.starship_log_system.repository.StarshipLogRepository;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class LogEntryService {
 
+    private final StarshipLogRepository starshipLogRepository;
+
+    public LogEntryService(StarshipLogRepository starshipLogRepository) {
+        this.starshipLogRepository = starshipLogRepository;
+    }
+
     public List<Log> getLogsForUser(User user) {
-        return Collections.emptyList();
+        return starshipLogRepository.findByUserId(user.getId());
     }
 
     public Log getLog(User user, String logId) {
-        return null;
+        return starshipLogRepository.findByIdAndUserId(UUID.fromString(logId), user.getId());
     }
 
     public boolean storeNewLog(User user, Log log) {
         validateNewLog(log);
-        return false;
+
+        log.setId(UUID.randomUUID());
+        log.setUserId(user.getId());
+
+        starshipLogRepository.save(log);
+
+        return true;
     }
 
     private void validateNewLog(Log log) {
