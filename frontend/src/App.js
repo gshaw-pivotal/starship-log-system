@@ -8,17 +8,22 @@ const LogUI = () => {
     const [identity, setIdentity] = useState("");
     const [passcode, setPasscode] = useState("");
 
+    const [loginError, setLoginError] = useState(false);
+
     const reset = () => {
         setName("");
         setRank("");
         setIdentity("");
         setPasscode("");
+
+        setLoginError(false);
     }
 
     const login = () => {
+        setLoginError(true);
     }
 
-    const  loginScreen = () => {
+    const loginScreen = () => {
         return (
             <div align="center">
                 <h1 className="header-1">Starship Log System</h1>
@@ -56,6 +61,11 @@ const LogUI = () => {
                         value={passcode}
                     />
                 </div>
+                {loginError ? (
+                    <div>
+                        <span className="login-error">Access Denied</span>
+                    </div>
+                ) : ('')}
                 <div>
                     <button
                         className="button"
