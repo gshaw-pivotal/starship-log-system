@@ -19,10 +19,19 @@
     width: 150px;
 }
 
+.label-area {
+    vertical-align: top;
+}
+
 .input {
     font-size: 20px;
     margin-bottom: 10px;
     width: 300px;
+}
+
+.input-area {
+    height: 250px;
+    width: 80%;
 }
 
 .button {
@@ -34,4 +43,22 @@
 .login-error {
     color: red;
     font-size: 20px;
+}
+
+.left-log-block {
+    border-right: black 1px solid;
+    display: inline-block;
+    /*margin-right: 10px;*/
+    width: 49%;
+}
+
+.right-log-block {
+    border-left: black 1px solid;
+    display: inline-block;
+    /*margin-left: 10px;*/
+    width: 49%;
+}
+
+.title-center {
+    text-align: center;
 }

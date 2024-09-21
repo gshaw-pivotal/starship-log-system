@@ -13,6 +13,14 @@ const LogUI = () => {
 
     const [loginError, setLoginError] = useState(false);
 
+    const [newLogEditable, setNewLogEditable] = useState(true);
+
+    const [logHeader, setLogHeader] = useState("");
+    const [logDate, setLogDate] = useState("");
+    const [logPosting, setLogPosting] = useState("");
+    const [logLocation, setLogLocation] = useState("");
+    const [logContent, setLogContent] = useState("");
+
     const reset = () => {
         setName("");
         setRank("");
@@ -41,6 +49,18 @@ const LogUI = () => {
         await logoutRequest(user);
 
         reset();
+    }
+
+    const saveNewLog = async () => {}
+
+    const clearLog = () => {
+        setLogHeader("");
+        setLogDate("");
+        setLogPosting("");
+        setLogLocation("");
+        setLogContent("");
+
+        setNewLogEditable(true);
     }
 
     const loginScreen = () => {
@@ -105,13 +125,82 @@ const LogUI = () => {
     const actionScreen = () => {
         return (
             <div>
-                <p>Menu</p>
+                <div align="center">
+                    <h1 className="header-1">Starship Log System</h1>
+                    <div>
+                        <button
+                            className="button"
+                            onClick={logout}
+                        >Logout
+                        </button>
+                    </div>
+                </div>
+                <hr/>
                 <div>
-                    <button
-                        className="button"
-                        onClick={logout}
-                    >Logout
-                    </button>
+                    <div className="left-log-block">
+                        <h3 className="header-3 title-center">Existing Recorded Logs</h3>
+                    </div>
+                    <div className="right-log-block">
+                        <h3 className="header-3 title-center">New / Current Log</h3>
+                        <div>
+                            <span className="label">Header:</span>
+                            <input
+                                className="input"
+                                disabled={!newLogEditable}
+                                onChange={(e) => setLogHeader(e.target.value)}
+                                value={logHeader}
+                            />
+                        </div>
+                        <div>
+                            <span className="label">Date:</span>
+                            <input
+                                className="input"
+                                disabled={!newLogEditable}
+                                onChange={(e) => setLogDate(e.target.value)}
+                                value={logDate}
+                            />
+                        </div>
+                        <div>
+                            <span className="label">Posting:</span>
+                            <input
+                                className="input"
+                                disabled={!newLogEditable}
+                                onChange={(e) => setLogPosting(e.target.value)}
+                                value={logPosting}
+                            />
+                        </div>
+                        <div>
+                            <span className="label">Location:</span>
+                            <input
+                                className="input"
+                                disabled={!newLogEditable}
+                                onChange={(e) => setLogLocation(e.target.value)}
+                                value={logLocation}
+                            />
+                        </div>
+                        <div>
+                            <span className="label label-area">Content:</span>
+                            <textarea
+                                className="input input-area"
+                                disabled={!newLogEditable}
+                                onChange={(e) => setLogContent(e.target.value)}
+                                value={logContent}
+                            />
+                        </div>
+                        <div align="center">
+                            <button
+                                className="button"
+                                disabled={!newLogEditable}
+                                onClick={saveNewLog}
+                            >Save Log
+                            </button>
+                            <button
+                                className="button"
+                                onClick={clearLog}
+                            >Clear Log
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
