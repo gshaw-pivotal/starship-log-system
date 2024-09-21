@@ -1,5 +1,8 @@
 import {useState} from "react";
 
+import {loginRequest, logoutRequest} from './api';
+import {User} from "./User";
+
 const LogUI = () => {
     const [accessToken, setAccessToken] = useState("");
 
@@ -15,12 +18,29 @@ const LogUI = () => {
         setRank("");
         setIdentity("");
         setPasscode("");
+        setAccessToken("");
 
         setLoginError(false);
     }
 
-    const login = () => {
-        setLoginError(true);
+    const login = async () => {
+        const user = new User(name, rank, identity, passcode);
+        const token = await loginRequest(user);
+
+        if (token.length === 0) {
+            setLoginError(true);
+            setAccessToken("")
+        } else {
+            setLoginError(false);
+            setAccessToken(token);
+        }
+    }
+
+    const logout = async () => {
+        const user = new User(name, rank, identity, passcode);
+        await logoutRequest(user);
+
+        reset();
     }
 
     const loginScreen = () => {
@@ -84,7 +104,16 @@ const LogUI = () => {
 
     const actionScreen = () => {
         return (
-            <p>Menu</p>
+            <div>
+                <p>Menu</p>
+                <div>
+                    <button
+                        className="button"
+                        onClick={logout}
+                    >Logout
+                    </button>
+                </div>
+            </div>
         );
     }
 
