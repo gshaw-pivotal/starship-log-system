@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-import {loginRequest, logoutRequest} from './api';
+import {getLogsRequest, loginRequest, logoutRequest} from './api';
 import {User} from "./User";
 
 const LogUI = () => {
@@ -20,6 +20,9 @@ const LogUI = () => {
     const [logPosting, setLogPosting] = useState("");
     const [logLocation, setLogLocation] = useState("");
     const [logContent, setLogContent] = useState("");
+
+    const [userLogs, setUserLogs] = useState([]);
+    const [haveUserLogs, setHaveUserLogs] = useState(false);
 
     const reset = () => {
         setName("");
@@ -61,6 +64,14 @@ const LogUI = () => {
         setLogContent("");
 
         setNewLogEditable(true);
+    }
+
+    const getUserLogs = () => {
+        if (!haveUserLogs) {
+            setHaveUserLogs(true);
+            getLogsRequest(accessToken)
+                .then(res => setUserLogs(res));
+        }
     }
 
     const loginScreen = () => {
@@ -123,6 +134,7 @@ const LogUI = () => {
     }
 
     const actionScreen = () => {
+        getUserLogs();
         return (
             <div>
                 <div align="center">

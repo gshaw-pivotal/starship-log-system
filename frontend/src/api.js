@@ -1,3 +1,5 @@
+import {Log} from "./Log";
+
 const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:8080' : '';
 
 export async function loginRequest(user) {
@@ -24,4 +26,23 @@ export async function logoutRequest(user) {
         },
         body: JSON.stringify(user)
     });
+}
+
+export async function getLogsRequest(token) {
+    const response = await fetch(`${API_URL}/logs`, {
+        method: 'GET',
+        headers: {
+            'X-API-KEY': token,
+        },
+    });
+    if (response.ok) {
+        let logList = [];
+        let json = await response.json();
+        for (let e of json) {
+            logList.push(new Log(e.id, e.userId, e.logDate, e.posting, e.location, e.header, e.content));
+        }
+        return logList;
+    }
+
+    return null;
 }
