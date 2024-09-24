@@ -42,7 +42,12 @@ export async function getLogsRequest(token) {
             logList.push(new Log(e.id, e.userId, e.logDate, e.posting, e.location, e.header, e.content));
         }
         return logList;
+    } else {
+        return null;
     }
+}
 
-    return null;
+export async function saveLogRequest() {
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    return true;
 }

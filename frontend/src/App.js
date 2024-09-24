@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-import {getLogsRequest, loginRequest, logoutRequest} from './api';
+import {getLogsRequest, loginRequest, logoutRequest, saveLogRequest} from './api';
 import {User} from "./User";
 
 const LogUI = () => {
@@ -14,6 +14,8 @@ const LogUI = () => {
     const [loginError, setLoginError] = useState(false);
 
     const [newLogEditable, setNewLogEditable] = useState(true);
+
+    const [disableActionButtons, setDisableActionButtons] = useState(false);
 
     const [logHeader, setLogHeader] = useState("");
     const [logDate, setLogDate] = useState("");
@@ -54,7 +56,17 @@ const LogUI = () => {
         reset();
     }
 
-    const saveNewLog = async () => {}
+    const saveNewLog = async () => {
+        setDisableActionButtons(true);
+
+        saveLogRequest()
+            .then(res => {
+                if (res === true) {
+                    setDisableActionButtons(false);
+                    clearLog();
+                }
+            });
+    }
 
     const clearLog = () => {
         setLogHeader("");
@@ -202,12 +214,13 @@ const LogUI = () => {
                         <div align="center">
                             <button
                                 className="button"
-                                disabled={!newLogEditable}
+                                disabled={!newLogEditable || disableActionButtons}
                                 onClick={saveNewLog}
                             >Save Log
                             </button>
                             <button
                                 className="button"
+                                disabled={disableActionButtons}
                                 onClick={clearLog}
                             >Clear Log
                             </button>
