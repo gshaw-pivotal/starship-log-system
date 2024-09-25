@@ -47,7 +47,14 @@ export async function getLogsRequest(token) {
     }
 }
 
-export async function saveLogRequest() {
-    await new Promise(resolve => setTimeout(resolve, 5000));
-    return true;
+export async function saveLogRequest(token, newLog) {
+    const response = await fetch(`${API_URL}/log`, {
+        method: 'POST',
+        headers: {
+            'X-API-KEY': token,
+            'content-type': 'application/json',
+        },
+        body: JSON.stringify(newLog)
+    });
+    return response.ok;
 }

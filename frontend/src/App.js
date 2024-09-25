@@ -2,6 +2,7 @@ import {useState} from "react";
 
 import {getLogsRequest, loginRequest, logoutRequest, saveLogRequest} from './api';
 import {User} from "./User";
+import {Log} from "./Log";
 
 const LogUI = () => {
     const [accessToken, setAccessToken] = useState("");
@@ -59,12 +60,14 @@ const LogUI = () => {
     const saveNewLog = async () => {
         setDisableActionButtons(true);
 
-        saveLogRequest()
+        const newLog = new Log(null, null, logDate, logPosting, logLocation, logHeader, logContent);
+
+        saveLogRequest(accessToken, newLog)
             .then(res => {
                 if (res === true) {
-                    setDisableActionButtons(false);
                     clearLog();
                 }
+                setDisableActionButtons(false);
             });
     }
 
