@@ -66,6 +66,7 @@ const LogUI = () => {
             .then(res => {
                 if (res === true) {
                     clearLog();
+                    setHaveUserLogs(false);
                 }
                 setDisableActionButtons(false);
             });
