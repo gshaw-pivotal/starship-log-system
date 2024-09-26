@@ -45,20 +45,29 @@
     font-size: 20px;
 }
 
+.parent-log-block {
+    display: flex;
+}
+
 .left-log-block {
     border-right: black 1px solid;
     display: inline-block;
-    /*margin-right: 10px;*/
+    height: 575px;
     width: 49%;
 }
 
 .right-log-block {
     border-left: black 1px solid;
     display: inline-block;
-    /*margin-left: 10px;*/
+    height: 575px;
     width: 49%;
 }
 
 .title-center {
     text-align: center;
+}
+
+.log-list-block {
+    height: 500px;
+    overflow-y: scroll;
 }

@@ -164,9 +164,10 @@ const LogUI = () => {
                     </div>
                 </div>
                 <hr/>
-                <div>
+                <div className="parent-log-block">
                     <div className="left-log-block">
                         <h3 className="header-3 title-center">Existing Recorded Logs</h3>
+                        <div className="log-list-block"></div>
                     </div>
                     <div className="right-log-block">
                         <h3 className="header-3 title-center">New / Current Log</h3>
