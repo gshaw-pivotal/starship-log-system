@@ -3,6 +3,7 @@ import {useState} from "react";
 import {getLogsRequest, loginRequest, logoutRequest, saveLogRequest} from './api';
 import {User} from "./User";
 import {Log} from "./Log";
+import LogItem from "./LogItem";
 
 const LogUI = () => {
     const [accessToken, setAccessToken] = useState("");
@@ -167,7 +168,10 @@ const LogUI = () => {
                 <div className="parent-log-block">
                     <div className="left-log-block">
                         <h3 className="header-3 title-center">Existing Recorded Logs</h3>
-                        <div className="log-list-block"></div>
+                        <div className="log-list-block">
+                            <hr/>
+                            {userLogs.map(l => (new LogItem(l)))}
+                        </div>
                     </div>
                     <div className="right-log-block">
                         <h3 className="header-3 title-center">New / Current Log</h3>
