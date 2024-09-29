@@ -91,6 +91,20 @@ const LogUI = () => {
         }
     }
 
+    function onClickOfExistingLog(logId) {
+        setNewLogEditable(false);
+
+        userLogs
+            .filter(log => log.id === logId)
+            .forEach(log => {
+                setLogHeader(log.header);
+                setLogDate(log.logDate);
+                setLogPosting(log.posting);
+                setLogLocation(log.location);
+                setLogContent(log.content);
+        });
+    }
+
     const loginScreen = () => {
         return (
             <div align="center">
@@ -170,7 +184,7 @@ const LogUI = () => {
                         <h3 className="header-3 title-center">Existing Recorded Logs</h3>
                         <div className="log-list-block">
                             <hr/>
-                            {userLogs.map(l => (new LogItem(l)))}
+                            {userLogs.map(log => (new LogItem(log, onClickOfExistingLog)))}
                         </div>
                     </div>
                     <div className="right-log-block">

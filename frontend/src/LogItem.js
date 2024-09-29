@@ -1,4 +1,4 @@
-function LogItem(log) {
+function LogItem(log, onClickAction) {
     let contentExtract = log.content.split("\n")[0];
 
     if (contentExtract.length > 70) {
@@ -6,7 +6,7 @@ function LogItem(log) {
     }
 
     return (
-        <div>
+        <div onClick={() => onClickAction(log.id)}>
             <span className="log-list-date-span">{log.logDate}</span>
             <span> | </span>
             <span>{log.header}</span>
